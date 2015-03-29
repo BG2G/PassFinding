@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.concurrent.Semaphore;
 
 
 public class PassTaskThread extends Thread{
@@ -8,6 +9,7 @@ public class PassTaskThread extends Thread{
 	private char[] availableChars;
 	private Hash hashFunction;
 	private PassHashData passHashData;
+	private Semaphore semaphore;
 	
 	
 	public PassTaskThread(String prefix, int length, char[] availableChars, String hashAlgorithm){
@@ -44,17 +46,19 @@ public class PassTaskThread extends Thread{
 		this.passHashData = phd;
 	}
 	
+	public void setSemaphore(Semaphore semaphore){
+		this.semaphore = semaphore;
+	}
 	
 	public void run(){
-		
+	
 		int n = this.passLength - prefix.length();
 		String pass = new String(prefix);
-		if(n>0){
-			
-			nestedLoops(pass, n);
-				
-			
+		if(n>0){			
+			nestedLoops(pass, n);		
 		}
+		this.semaphore.release();
+				
 	}
 
 }
