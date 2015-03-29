@@ -12,15 +12,17 @@ public class PassTask {
 	private boolean useSpecialCharacters;
 	private char[] specialCharsUsed;
 	private String prefix = "";
+	private String hashAlgorithm = "MD5";
 	private boolean done = false;
 	
-	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed){
+	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed, String hashAlgorithm){
 		this.passLength = length;
 		this.useLowerCase = lowercase;
 		this. useUpperCase = uppercase;
 		this.useNumbers = numbers;
 		this.useSpecialCharacters = specialChars;
 		this.specialCharsUsed = specialCharsUsed;
+		this.hashAlgorithm = hashAlgorithm;
 		
 		int n =this.passLength - MAX_PASS_LENGTH_BY_THREAD;
 		char first = this.getFirstChar(lowercase,uppercase, numbers);
@@ -36,7 +38,7 @@ public class PassTask {
 	
 	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers){
 				
-		this(length,lowercase,uppercase,numbers, false, null);
+		this(length,lowercase,uppercase,numbers, false, null, "MD5");
 		
 		
 	}
@@ -116,7 +118,7 @@ public class PassTask {
 		String currentPrefix = new String(this.prefix);
 		this.updatePrefix();
 		
-		return new PassTaskThread(currentPrefix, this.passLength, this.getAvailableCharacters());
+		return new PassTaskThread(currentPrefix, this.passLength, this.getAvailableCharacters(), this.hashAlgorithm);
 		
 	}
 	
