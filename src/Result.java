@@ -10,4 +10,15 @@ public class Result {
 		System.out.println(hash);
 	}
 	
+	public static void taskStarted(PassTask task){
+		System.out.println(task.toString() + " started");
+	}
+	
+	public static void taskFinished(PassTask task){
+		System.out.println(task.toString() + " finished");
+	}
+	
+	public static void taskOnGoing(PassTask task){
+		System.out.println(task.toString() + "; all threads started");
+	}
 }

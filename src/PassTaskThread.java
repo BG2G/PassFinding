@@ -1,4 +1,4 @@
-import java.util.Arrays;
+
 import java.util.concurrent.Semaphore;
 
 
@@ -31,6 +31,9 @@ public class PassTaskThread extends Thread{
 			if(index>=0){
 				//Found
 				Result.matchFound(password, passHash);
+			}else if((password.equals("aaa"))||(password.equals("aab"))||password.equals("aac")){
+				//TODO remove
+				System.out.println(password + " : "+ passHash);
 			}
 		}else{
 			for(int i = 0; i<this.availableChars.length;i++){
@@ -53,11 +56,13 @@ public class PassTaskThread extends Thread{
 	public void run(){
 	
 		int n = this.passLength - prefix.length();
+		System.out.println("n : " + n);
 		String pass = new String(prefix);
 		if(n>0){			
 			nestedLoops(pass, n);		
 		}
 		this.semaphore.release();
+		System.out.println("Thread finished");
 				
 	}
 

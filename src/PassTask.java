@@ -82,7 +82,7 @@ public class PassTask {
 		if(this.useLowerCase){
 			int currentChar = 97;
 			for(int i =0; i<26; i++){
-				availableChars[j]= (Character.toChars(currentChar))[0];
+				availableChars[j]= (Character.toChars(currentChar+i))[0];
 				j++;
 			}
 			
@@ -90,14 +90,14 @@ public class PassTask {
 		if(this.useUpperCase){
 			int currentChar = 65;
 			for(int i =0; i<26; i++){
-				availableChars[j]= (Character.toChars(currentChar))[0];
+				availableChars[j]= (Character.toChars(currentChar+i))[0];
 				j++;
 			}
 		}
 		if(this.useNumbers){
 			int currentChar = 48;
 			for(int i =0; i<10; i++){
-				availableChars[j]= (Character.toChars(currentChar))[0];
+				availableChars[j]= (Character.toChars(currentChar+i))[0];
 				j++;
 			}
 		}
@@ -117,6 +117,8 @@ public class PassTask {
 		
 		String currentPrefix = new String(this.prefix);
 		this.updatePrefix();
+		System.out.println("current prefix : "+ currentPrefix);
+		System.out.println("new prefix : " + this.prefix);
 		
 		return new PassTaskThread(currentPrefix, this.passLength, this.getAvailableCharacters(), this.hashAlgorithm);
 		
@@ -130,20 +132,44 @@ public class PassTask {
 	private void updatePrefix(){
 		
 		char[] availableChars = this.getAvailableCharacters();
+		//TODO remove
+		System.out.println("available characters : "+new String(availableChars));
 		int n = availableChars.length;
 		char[] prefixArray = this.prefix.toCharArray();
+		System.out.println("prefixArray : " + new String(prefixArray));
 		boolean done = true;
 		for(int i = prefixArray.length-1; i>=0;i--){
-			if(prefixArray[i]!=availableChars[n]){
+			if(prefixArray[i]!=availableChars[n-1]){
 				done = false;
 				int index = Arrays.binarySearch(availableChars, prefixArray[i]);
+				System.out.println("index : "+index);
 				prefixArray[i]=availableChars[index+1];
+				this.prefix = new String(prefixArray);
 				return;
 			}
 		}
 		if(done){
 			this.done =true;
 		}
+	}
+	
+	public String toString(){
+		String description = "PassFinding Task : "+this.passLength+" characters";
+		
+		if(this.useLowerCase){
+			description = description + ", lowercase";
+		}
+		if(this.useUpperCase){
+			description = description + ", uppercase";
+		}
+		if(this.useNumbers){
+			description = description +", numbers";
+		}
+		if(this.useSpecialCharacters){
+			description = description +", "+ this.specialCharsUsed.length + " special characters";
+		}
+		
+		return description;
 	}
 
 }

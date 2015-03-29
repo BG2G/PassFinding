@@ -1,3 +1,4 @@
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -31,7 +32,12 @@ public class Hash {
 	
 	public byte[] hashing (String password){
 		this.md.reset();
-		this.md.update(password.getBytes());
+		try {
+			this.md.update(password.getBytes("UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return md.digest();
 	}
 	

@@ -6,7 +6,7 @@ import java.util.concurrent.Semaphore;
 
 public class Test {
 
-	public final static int CONCURRENT_THREADS = 20;
+	public final static int CONCURRENT_THREADS = 4;
 	
 	public static void hashFileGeneration(String filename, String[] passwords){
 		PrintWriter writer;
@@ -14,7 +14,9 @@ public class Test {
 		try {
 			writer = new PrintWriter(filename, "UTF-8");
 			for(int i =0; i< passwords.length; i++){
-				writer.println(hashFunction.hashing(passwords[i]));
+				byte[] passHash =hashFunction.hashing("run");
+				writer.println(passHash);
+				System.out.println(passHash);
 			}
 			
 			writer.close();
@@ -29,8 +31,8 @@ public class Test {
 	public static void testHashfileGeneration(){
 		String[] passwords = new String[3];
 		passwords[0]= "patate";
-		passwords[1] = "run";
-		passwords[2] = "S7ko2";
+		passwords[1] = "S7ko2";
+		passwords[2] = "klnpogcdxza";
 		Test.hashFileGeneration("hashData.txt", passwords);
 	}
 	
@@ -42,7 +44,9 @@ public class Test {
 		tasks[2]= new PassTask(5, true, true, true);
 		
 		Semaphore semaphore = new Semaphore(CONCURRENT_THREADS);
-		for (int i = 0; i<3;i++){
+		for (int i = 0; i<1;i++){
+			
+			Result.taskStarted(tasks[i]);
 			while(!tasks[i].isDone()){
 				
 				semaphore.acquire();
@@ -53,6 +57,7 @@ public class Test {
 				newThread.start();
 				
 			}
+			Result.taskOnGoing(tasks[i]);
 		}
 	}
 	
