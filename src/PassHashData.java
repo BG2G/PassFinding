@@ -18,14 +18,13 @@ public class PassHashData {
 	    try(BufferedReader br = new BufferedReader(new FileReader(filename))) {
 	       
 	        String line = br.readLine();
-	        n=1;
 	        List<String> lineList = new LinkedList<String>();
 
 	        while (line != null) {
-	            
-	            line = br.readLine();	            
-	            n++;
+	        	
 	            lineList.add(line);
+	            n++;
+	            line = br.readLine();	            
 	            
 	        }
 	        
@@ -36,7 +35,7 @@ public class PassHashData {
 	        	this.passHashList[i] = lineList.get(i).getBytes();	    	
 	        }
 	        
-	        Arrays.sort(this.passHashList);
+	        Auxiliary.sort(this.passHashList);
 	        
 	    } catch (FileNotFoundException e) {
 			// TODO Ask the file again

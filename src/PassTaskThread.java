@@ -27,7 +27,7 @@ public class PassTaskThread extends Thread{
 		if(level == 0){
 			//password generated, hashing and testing
 			byte[] passHash = this.hashFunction.hashing(password);
-			int index = Arrays.binarySearch(this.passHashData.passHashList, passHash);
+			int index = Auxiliary.search(this.passHashData.passHashList, passHash);
 			if(index>=0){
 				//Found
 				Result.matchFound(password, passHash);

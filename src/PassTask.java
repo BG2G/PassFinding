@@ -133,7 +133,7 @@ public class PassTask {
 		int n = availableChars.length;
 		char[] prefixArray = this.prefix.toCharArray();
 		boolean done = true;
-		for(int i = prefixArray.length; i>0;i--){
+		for(int i = prefixArray.length-1; i>=0;i--){
 			if(prefixArray[i]!=availableChars[n]){
 				done = false;
 				int index = Arrays.binarySearch(availableChars, prefixArray[i]);
