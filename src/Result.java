@@ -7,7 +7,7 @@ public class Result {
 		System.out.print("Password found : ");
 		System.out.print(matchingPassword);
 		System.out.print(", hash : ");
-		System.out.println(hash);
+		Auxiliary.printByteArray(hash);
 	}
 	
 	public static void taskStarted(PassTask task){

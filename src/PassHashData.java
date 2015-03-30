@@ -1,9 +1,7 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class PassHashData {
@@ -12,37 +10,29 @@ public class PassHashData {
 	public String hashAlgorithm = "MD5";
 	
 	public PassHashData(String filename, String algo){
-		int n =0;
-		
-	    try(BufferedReader br = new BufferedReader(new FileReader(filename))) {
-	       
-	        String line = br.readLine();
-	        List<String> lineList = new LinkedList<String>();
-
-	        while (line != null) {
-	        	
-	            lineList.add(line);
-	            n++;
-	            line = br.readLine();	            
-	            
-	        }
-	        
-	        int length = lineList.get(0).getBytes().length;
-	        this.passHashList = new byte[n][length];
-	        
-	        for(int i =0; i<n;i++){
-	        	this.passHashList[i] = lineList.get(i).getBytes();	    	
-	        }
-	        
-	        Auxiliary.sort(this.passHashList);
-	        
-	    } catch (FileNotFoundException e) {
-			// TODO Ask the file again
-			e.printStackTrace();
+	
+		Path path = Paths.get(filename);
+		try {
+			byte[] data = Files.readAllBytes(path);
+			int n = data.length/16;
+			System.out.println("data length : "+data.length);
+			// TODO implement SHA1
+			if(algo.equals("MD5")){
+				this.passHashList = new byte[n][16];
+				for(int i =0; i<n ; i++){
+					for(int j=0; j<16; j++){
+						this.passHashList[i][j]=data[16*i+j];
+					}
+				}
+			}
 		} catch (IOException e) {
-			
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//TODO
+		//Auxiliary.sort(this.passHashList);
+		
 	    
 	    this.hashAlgorithm = algo;
 	        

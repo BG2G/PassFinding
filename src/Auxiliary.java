@@ -34,6 +34,15 @@ public  class Auxiliary {
 		return -1;
 	}
 	
+	public static boolean contains(byte[][] array, byte[] element){
+		for (int i =0; i< array.length; i++){
+			if (areEquals(array[i],element)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static boolean compare(byte[] a, byte[] b){
 		
 		int n = a.length;
@@ -50,4 +59,26 @@ public  class Auxiliary {
 		return true;
 	}
 	
+	public static boolean areEquals(byte[] a, byte[] b){
+		
+		int n = a.length;
+		if(n!= b.length){
+			return false;
+		}
+		for(int i =0; i<n;i++){
+			if(a[i]!=b[i]){
+				return false;
+			}
+			
+		}		
+		
+		return true;
+	}
+	
+	public static void printByteArray(byte[] a){
+		for(int i =0; i<a.length; i++){
+			System.out.print(a[i]);
+		}
+		System.out.println();
+	}
 }

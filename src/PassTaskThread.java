@@ -27,13 +27,13 @@ public class PassTaskThread extends Thread{
 		if(level == 0){
 			//password generated, hashing and testing
 			byte[] passHash = this.hashFunction.hashing(password);
-			int index = Auxiliary.search(this.passHashData.passHashList, passHash);
-			if(index>=0){
+			
+			if(Auxiliary.contains(this.passHashData.passHashList, passHash)){
 				//Found
 				Result.matchFound(password, passHash);
-			}else if((password.equals("aaa"))||(password.equals("aab"))||password.equals("aac")){
-				//TODO remove
-				System.out.println(password + " : "+ passHash);
+			}else if(password.equals("run")){
+				System.out.print(password+" : ");
+				Auxiliary.printByteArray(passHash);
 			}
 		}else{
 			for(int i = 0; i<this.availableChars.length;i++){
@@ -56,7 +56,6 @@ public class PassTaskThread extends Thread{
 	public void run(){
 	
 		int n = this.passLength - prefix.length();
-		System.out.println("n : " + n);
 		String pass = new String(prefix);
 		if(n>0){			
 			nestedLoops(pass, n);		
