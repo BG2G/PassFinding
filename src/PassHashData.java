@@ -51,5 +51,30 @@ public class PassHashData {
 	public void setHashAlgorithm (String algo){
 		this.hashAlgorithm = algo;
 	}
+	
+	public void removeElement(byte[] element){
+		int i = Auxiliary.searchIndex(this.passHashList, element);
+		if(i>=0){
+			int n=this.passHashList.length;
+			byte[][] newPassHashList = new byte[n-1][element.length];
+			boolean b =false;
+			for(int j = 0; j <n;j++){
+				if(j!=i){
+					if(b){
+						Auxiliary.transfer(this.passHashList[j], newPassHashList[j-1]);
+					}else{
+						Auxiliary.transfer(this.passHashList[j], newPassHashList[j]);
+					}
+				}else{
+					b =true;
+				}
+			}
+			this.passHashList = newPassHashList;
+			for(int k=0; k<newPassHashList.length; k++){
+				Auxiliary.printByteArray(newPassHashList[k]);
+			}
+		}
+		
+	}
 
 }

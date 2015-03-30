@@ -21,13 +21,13 @@ public  class Auxiliary {
 	
 	public static void transfer(byte[] a, byte[]b){
 		for (int i =0; i< a.length;i++){
-			a[i]=b[i];
+			b[i]=a[i];
 		}
 	}
 	
-	public static int search(byte[][] array, byte[] element){
+	public static int searchIndex(byte[][] array, byte[] element){
 		for (int i =0; i< array.length; i++){
-			if (array[i].equals(element)){
+			if (areEquals(array[i], element)){
 				return i;
 			}
 		}

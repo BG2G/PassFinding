@@ -8,7 +8,7 @@ public class PassTaskThread extends Thread{
 	private int passLength;
 	private char[] availableChars;
 	private Hash hashFunction;
-	private PassHashData passHashData;
+	private volatile PassHashData passHashData;
 	private Semaphore semaphore;
 	
 	
@@ -31,10 +31,9 @@ public class PassTaskThread extends Thread{
 			if(Auxiliary.contains(this.passHashData.passHashList, passHash)){
 				//Found
 				Result.matchFound(password, passHash);
-			}else if(password.equals("run")){
-				System.out.print(password+" : ");
-				Auxiliary.printByteArray(passHash);
+				this.passHashData.removeElement(passHash);
 			}
+			
 		}else{
 			for(int i = 0; i<this.availableChars.length;i++){
 				

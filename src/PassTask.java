@@ -3,7 +3,8 @@ import java.util.Arrays;
 
 public class PassTask {
 	
-	private final int MAX_PASS_LENGTH_BY_THREAD = 5;
+	private final int MAX_PASS_LENGTH_BY_THREAD_UNICASE = 5;
+	private final int MAX_PASS_LENGTH_BY_THREAD_MULTICASE = 4;
 	
 	private int passLength;
 	private boolean useLowerCase;
@@ -12,6 +13,7 @@ public class PassTask {
 	private boolean useSpecialCharacters;
 	private char[] specialCharsUsed;
 	private String prefix = "";
+	private char[] availableChars;
 	private String hashAlgorithm = "MD5";
 	private boolean done = false;
 	
@@ -24,8 +26,16 @@ public class PassTask {
 		this.specialCharsUsed = specialCharsUsed;
 		this.hashAlgorithm = hashAlgorithm;
 		
-		int n =this.passLength - MAX_PASS_LENGTH_BY_THREAD;
-		char first = this.getFirstChar(lowercase,uppercase, numbers);
+		initiateAvailableCharacters(lowercase, uppercase, numbers, specialChars, specialCharsUsed);
+		
+		int n;
+		if(this.useLowerCase&&this.useUpperCase){
+			n = this.passLength - MAX_PASS_LENGTH_BY_THREAD_MULTICASE;
+		}else{
+			n = this.passLength - MAX_PASS_LENGTH_BY_THREAD_UNICASE;
+		}
+		char first = this.getAvailableCharacters()[0];
+		
 		
 		if(n>0){
 			for(int i =0; i< n; i++){
@@ -60,57 +70,60 @@ public class PassTask {
 	}
 	
 
-	public char[] getAvailableCharacters(){
+	public void initiateAvailableCharacters(boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed){
 		
 		int n = 0;
-		if(this.useLowerCase){
+		if(lowercase){
 			n = n+ 26;
 		}
-		if(this.useUpperCase){
+		if(uppercase){
 			n = n + 26;
 		}
-		if(this.useNumbers){
+		if(numbers){
 			n = n + 10;
 		}
-		if(this.useSpecialCharacters){
-			n = n + this.specialCharsUsed.length;
+		if(specialChars){
+			n = n + specialCharsUsed.length;
 		}
 		
-		char[] availableChars = new char[n];
+		this.availableChars = new char[n];
 		int j =0;
 
-		if(this.useLowerCase){
+		if(lowercase){
 			int currentChar = 97;
 			for(int i =0; i<26; i++){
-				availableChars[j]= (Character.toChars(currentChar+i))[0];
+				this.availableChars[j]= (Character.toChars(currentChar+i))[0];
 				j++;
 			}
 			
 		}
-		if(this.useUpperCase){
+		if(uppercase){
 			int currentChar = 65;
 			for(int i =0; i<26; i++){
-				availableChars[j]= (Character.toChars(currentChar+i))[0];
+				this.availableChars[j]= (Character.toChars(currentChar+i))[0];
 				j++;
 			}
 		}
-		if(this.useNumbers){
+		if(numbers){
 			int currentChar = 48;
 			for(int i =0; i<10; i++){
-				availableChars[j]= (Character.toChars(currentChar+i))[0];
+				this.availableChars[j]= (Character.toChars(currentChar+i))[0];
 				j++;
 			}
 		}
-		if(this.useSpecialCharacters){
-			for(int i =0; i<this.specialCharsUsed.length; i++){
-				availableChars[j] = specialCharsUsed[i];
+		if(specialChars){
+			for(int i =0; i<specialCharsUsed.length; i++){
+				this.availableChars[j] = specialCharsUsed[i];
 				j++;
 			}
 		}
 		
-		return availableChars;
+		Arrays.sort(this.availableChars);
 	}
 	
+	public char[] getAvailableCharacters(){
+		return this.availableChars;
+	}
 
 	
 	public PassTaskThread nextThread(){
