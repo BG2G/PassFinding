@@ -181,5 +181,24 @@ public class PassTask {
 		
 		return description;
 	}
+	
+	public String getname(){
+		String name = "";
+		
+		if(this.useLowerCase){
+			name = name + "L";
+		}
+		if(this.useUpperCase){
+			name = name + "U";
+		}
+		if(this.useNumbers){
+			name = name + "N";
+		}
+		if(this.useSpecialCharacters){
+			name = name + "S";
+		}
+		name = name + passLength;
+		return name;
+	}
 
 }

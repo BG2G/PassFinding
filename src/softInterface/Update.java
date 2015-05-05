@@ -15,10 +15,29 @@ public class Update {
 		//update le tableau
 		
 		if (code ==STARTING){
-			status = "In Progress";
+			status = "In Progress";									
 		}else if (code == DONE){
 			status = "Done";
 		}
+		
+		
+		
+	}
+	
+	public static void updateGlobalTask(String name, int code){
+
+		String status = "";
+		
+		
+		//update le tableau
+		
+		if (code ==STARTING){
+			status = "In Progress";									
+		}else if (code == DONE){
+			status = "Done";
+		}
+		
+		
 		
 	}
 }

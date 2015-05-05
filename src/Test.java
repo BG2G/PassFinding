@@ -51,6 +51,10 @@ public class Test {
 		tasks[0]= new PassTask(3, true, false, false);
 		tasks[1]= new PassTask(6, true, false, false);
 		tasks[2]= new PassTask(5, true, true, true);
+		for (int i = 0; i<3;i++){
+			
+			softInterface.Update.updateGlobalTask(tasks[i].getname(), softInterface.Update.STARTING);
+		}
 		
 		Semaphore semaphore = new Semaphore(CONCURRENT_THREADS);
 		for (int i = 0; i<3;i++){
