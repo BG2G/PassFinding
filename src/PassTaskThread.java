@@ -53,6 +53,8 @@ public class PassTaskThread extends Thread{
 	}
 	
 	public void run(){
+		
+		softInterface.Update.updateLocalTask(prefix, passLength, availableChars.length, softInterface.Update.STARTING);
 	
 		int n = this.passLength - prefix.length();
 		String pass = new String(prefix);
@@ -61,6 +63,8 @@ public class PassTaskThread extends Thread{
 		}
 		this.semaphore.release();
 		System.out.println("Thread finished");
+		
+		softInterface.Update.updateLocalTask(prefix, passLength, availableChars.length, softInterface.Update.DONE);
 				
 	}
 
