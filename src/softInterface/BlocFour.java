@@ -17,7 +17,7 @@ public class BlocFour {
 		
 		tit3 = new JLabel("Machines");
 		// Table
-		tab = new TableMachine(3,3);
+		tab = new TableMachine(6,4);
 		// Panel
 		Component[] ele4 = {tit3,tab.getScroll()};
 		panel = new Panel(ele4);

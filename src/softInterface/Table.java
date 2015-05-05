@@ -1,6 +1,8 @@
 package softInterface;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -15,7 +17,7 @@ public class Table {
 	public Table(int nbCol, int nbLin,int nbLiVi, String[] name, boolean editable){
 
 		list = new ArrayList();
-		String data[][]= new String[nbLiVi][nbCol];
+		String data[][]= new String[nbLin][nbCol];
 		if(editable==false){
 			tab = new JTable();
 			tab.setModel(new NonEditableModel(data,name));
@@ -26,7 +28,11 @@ public class Table {
 		}
 		scroll = new JScrollPane(tab);
 		tab.setFillsViewportHeight(true);
-		tab.setPreferredScrollableViewportSize(tab.getPreferredSize());
+		int hLi = 16;
+		int width = (int) tab.getPreferredSize().getWidth()+1;
+		int height = nbLiVi*hLi;
+		Dimension dim = new Dimension(width,height);
+		tab.setPreferredScrollableViewportSize(dim);
 
 	}
 
