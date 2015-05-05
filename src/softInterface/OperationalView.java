@@ -48,7 +48,6 @@ public class OperationalView extends Window implements ActionListener {
 		general.add(nbThree.getPanel());
 		general.add(Box.createRigidArea(new Dimension(0,10)));
 		general.add(nbFour.getPanel());
-		general.add(Box.createRigidArea(new Dimension(0,10)));
 
 
 		general.setLayout(new BoxLayout(general,BoxLayout.Y_AXIS));
