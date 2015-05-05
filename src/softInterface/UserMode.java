@@ -22,8 +22,8 @@ public class UserMode extends Window implements ActionListener {
 	
 	private JLabel tit;
 	private JLabel cho;
-	private JButton head;
-	private JButton slave;
+	private JButton MASTER;
+	private JButton SLAVE;
 	
 	
 	public UserMode(){
@@ -43,16 +43,16 @@ public class UserMode extends Window implements ActionListener {
 		
 		
 		// Buttons init. + add
-		JButton but1 = new JButton("Head");
-		this.head = but1;
-		head.setActionCommand("blop");
-		head.addActionListener(this);
-		JButton but2 = new JButton("Slave");
-		this.slave = but2;
-		slave.setActionCommand("plop");
-		slave.addActionListener(this);
+		JButton but1 = new JButton("MASTER");
+		this.MASTER = but1;
+		MASTER.setActionCommand("blop");
+		MASTER.addActionListener(this);
+		JButton but2 = new JButton("SLAVE");
+		this.SLAVE = but2;
+		SLAVE.setActionCommand("plop");
+		SLAVE.addActionListener(this);
 	
-		Component[] cp1 = {head,slave};
+		Component[] cp1 = {MASTER,SLAVE};
 		Panel pan2 = new Panel(cp1);
 		pan2.setLayout(new FlowLayout());
 		
@@ -72,7 +72,7 @@ public class UserMode extends Window implements ActionListener {
 	public void actionPerformed(ActionEvent ev){
 		if (ev.getActionCommand().equals("blop")){
 			String ip = "blabla";
-			System.out.println("head");
+			System.out.println("MASTER");
 			try 
 			{ 
 			InetAddress thisIp = InetAddress.getLocalHost(); 
@@ -83,11 +83,11 @@ public class UserMode extends Window implements ActionListener {
 			e.printStackTrace(); 
 			}
 			this.setVisible(false);
-			OperationalView op = new OperationalView("HEAD", ip, "My Password");
+			OperationalView op = new OperationalView("MASTER", ip, "My Password");
 		}
 		else if (ev.getActionCommand().equals("plop")){
 			String ip = "blabla";
-			System.out.println("slave");
+			System.out.println("SLAVE");
 			try 
 			{ 
 			InetAddress thisIp = InetAddress.getLocalHost(); 
