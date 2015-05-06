@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,6 +62,11 @@ public class OperationalView extends Window implements ActionListener {
 		cont.add(general);
 		revalidate();
 		pack();
+		
+		
+		// Listener
+		nbTwo.getButt().setActionCommand("test");
+		nbTwo.getButt().addActionListener(this);
 
 
 	}
@@ -115,6 +121,16 @@ public class OperationalView extends Window implements ActionListener {
 		this.general = general;
 	}
 
+	public void actionPerformed(ActionEvent ev){
+		
+		if (ev.getActionCommand().equals("test")){
+			System.out.println("test");
+			String[] elements = {"Password","Hash", "Time"};
+			nbTwo.addLine(elements);
+			revalidate();
+		}
+		
+	}
 
 
 
