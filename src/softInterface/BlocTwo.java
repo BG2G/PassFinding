@@ -3,10 +3,8 @@ package softInterface;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
@@ -18,7 +16,6 @@ public class BlocTwo {
 	private JLabel text5;
 	private Table tab;
 	private Panel panel;
-	private JButton butt;
 
 	public BlocTwo(){
 
@@ -36,16 +33,12 @@ public class BlocTwo {
 		// Table
 		tab = new TableCode(3,3);
 		
-		// Test button
-		butt = new JButton("test");
-		
 		// Panel
-		Component ele2[] = new Component[5];
+		Component ele2[] = new Component[4];
 		ele2[2] = box;
 		ele2[0] = text4;
 		ele2[1] = text5;
 		ele2[3] = tab.getScroll();
-		ele2[4] = butt;
 		panel = new Panel(ele2);
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -53,14 +46,6 @@ public class BlocTwo {
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		
-	}
-
-	public JButton getButt() {
-		return butt;
-	}
-
-	public void setButt(JButton butt) {
-		this.butt = butt;
 	}
 
 	public JComboBox getBox() {
@@ -101,11 +86,6 @@ public class BlocTwo {
 
 	public void setPanel(Panel panel) {
 		this.panel = panel;
-	}
-	
-	public void addLine(String[] elements){
-		tab.addLine(elements);
-				
 	}
 	
 
