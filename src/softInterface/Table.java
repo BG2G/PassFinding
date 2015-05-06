@@ -10,7 +10,7 @@ import javax.swing.JTable;
 
 public class Table {
 
-	private ArrayList list;
+
 	private JTable tab;
 	private JScrollPane scroll;
 	private int col;
@@ -21,7 +21,6 @@ public class Table {
 
 	public Table(int nbCol, int nbLin,int nbLiVi, String tag, boolean editable){
 
-		list = new ArrayList();
 		col = nbCol;
 		lin = nbLin;
 		edit = editable;
@@ -43,13 +42,7 @@ public class Table {
 
 	}
 
-	public ArrayList getList() {
-		return list;
-	}
 
-	public void setList(ArrayList list) {
-		this.list = list;
-	}
 
 	public JTable getTab() {
 		return tab;
