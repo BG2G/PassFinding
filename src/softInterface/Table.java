@@ -13,18 +13,25 @@ public class Table {
 	private ArrayList list;
 	private JTable tab;
 	private JScrollPane scroll;
+	private int col;
+	private int lin;
+	private int vis;
+	private DynamicModel model;
+	private boolean edit;
 
-	public Table(int nbCol, int nbLin,int nbLiVi, String[] name, boolean editable){
+	public Table(int nbCol, int nbLin,int nbLiVi, String tag, boolean editable){
 
 		list = new ArrayList();
-		String data[][]= new String[nbLin][nbCol];
+		col = nbCol;
+		lin = nbLin;
+		edit = editable;
+		vis = nbLiVi;
+		model = new DynamicModel(tag, nbLin, editable);
+		tab = new JTable();
+		tab.setModel(model);
 		if(editable==false){
-			tab = new JTable();
-			tab.setModel(new NonEditableModel(data,name));
 			tab.setFocusable(false);
 			tab.setRowSelectionAllowed(false);
-		}else{
-			tab = new JTable(data,name);
 		}
 		scroll = new JScrollPane(tab);
 		tab.setFillsViewportHeight(true);
@@ -60,8 +67,49 @@ public class Table {
 		this.scroll = scroll;
 	}
 
-	public void add(){
-		// TODO
+	public int getCol() {
+		return col;
+	}
+
+	public void setCol(int col) {
+		this.col = col;
+	}
+
+	public int getLin() {
+		return lin;
+	}
+
+	public void setLin(int lin) {
+		this.lin = lin;
+	}
+
+	public int getVis() {
+		return vis;
+	}
+
+	public void setVis(int vis) {
+		this.vis = vis;
+	}
+
+	
+	public boolean isEdit() {
+		return edit;
+	}
+
+	public void setEdit(boolean edit) {
+		this.edit = edit;
+	}
+
+	public DynamicModel getModel() {
+		return model;
+	}
+
+	public void setModel(DynamicModel model) {
+		this.model = model;
+	}
+
+	public void addLine(String[] elements){
+		model.addLine(elements);
 	}
 
 	public void modify(){
