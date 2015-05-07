@@ -13,18 +13,23 @@ public class PassTask {
 	private boolean useSpecialCharacters;
 	private char[] specialCharsUsed;
 	private String prefix = "";
+	private String endingPrefix ="";
 	private char[] availableChars;
 	private String hashAlgorithm = "MD5";
 	private boolean done = false;
 	
-	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed, String hashAlgorithm){
+
+	
+	
+	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed, String hashAlgorithm, String startingPrefix, String endingPrefix){
 		this.passLength = length;
 		this.useLowerCase = lowercase;
-		this. useUpperCase = uppercase;
+		this.useUpperCase = uppercase;
 		this.useNumbers = numbers;
 		this.useSpecialCharacters = specialChars;
 		this.specialCharsUsed = specialCharsUsed;
 		this.hashAlgorithm = hashAlgorithm;
+		this.endingPrefix = endingPrefix;
 		
 		initiateAvailableCharacters(lowercase, uppercase, numbers, specialChars, specialCharsUsed);
 		
@@ -35,7 +40,8 @@ public class PassTask {
 			n = this.passLength - MAX_PASS_LENGTH_BY_THREAD_UNICASE;
 		}
 		char first = this.getAvailableCharacters()[0];
-		
+		n = n - startingPrefix.length();
+		prefix = new String(startingPrefix);
 		
 		if(n>0){
 			for(int i =0; i< n; i++){
@@ -46,26 +52,14 @@ public class PassTask {
 		
 	}
 	
+	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed, String hashAlgorithm){
+		this(length, lowercase, uppercase, numbers, specialChars, specialCharsUsed, hashAlgorithm, "", "");
+	}
+	
 	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers){
 				
 		this(length,lowercase,uppercase,numbers, false, null, "MD5");
 		
-		
-	}
-	
-	
-
-
-	private char getFirstChar(boolean lowercase, boolean uppercase, boolean numbers){
-		if(lowercase){
-			return 'a';
-		}else if(uppercase){
-			return 'A';
-		}else if(numbers){
-			return '0';
-		}else{
-			return 'a';
-		}
 		
 	}
 	
@@ -146,9 +140,11 @@ public class PassTask {
 		
 		int n = availableChars.length;
 		char[] prefixArray = this.prefix.toCharArray();
+		char[] endingPrefixArray = this.endingPrefix.toCharArray();
 		
 		boolean done = true;
-		for(int i = prefixArray.length-1; i>=0;i--){
+		for(int i = prefixArray.length-1; i>=endingPrefix.length();i--){
+
 			if(prefixArray[i]!=availableChars[n-1]){
 				done = false;
 				int index = Arrays.binarySearch(availableChars, prefixArray[i]);
@@ -157,9 +153,31 @@ public class PassTask {
 				this.prefix = new String(prefixArray);
 				return;
 			}
+		
+		}
+		for(int i = 0; i<endingPrefix.length(); i++){
+			if(prefixArray[i] != endingPrefixArray[i]){
+				//Not done
+				done =false;
+				// updating the first part of the prefix
+				nextFirstPartPrefix(prefixArray, endingPrefix.length(), availableChars);
+				
+				this.prefix = new String(prefixArray);
+				return;
+			}
 		}
 		if(done){
 			this.done =true;
+		}
+	}
+	
+	private void nextFirstPartPrefix(char[] current, int n, char[] options){
+		for(int i = n-1; i>=0; i--){
+			if(current[i] != options[options.length -1]){
+				int index = Arrays.binarySearch(options, current[i]);				
+				current[i]=options[index+1];
+				return;
+			}
 		}
 	}
 	
