@@ -7,6 +7,8 @@ public class PassTask {
 	private final int MAX_PASS_LENGTH_BY_THREAD_UNICASE = 5;
 	private final int MAX_PASS_LENGTH_BY_THREAD_MULTICASE = 4;
 	
+	private int id;
+	
 	private int passLength;
 	private boolean useLowerCase;
 	private boolean useUpperCase;
@@ -23,7 +25,7 @@ public class PassTask {
 
 	
 	
-	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed, String hashAlgorithm, String startingPrefix, String endingPrefix){
+	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed, String hashAlgorithm, String startingPrefix, String endingPrefix, int ID){
 		this.passLength = length;
 		this.useLowerCase = lowercase;
 		this.useUpperCase = uppercase;
@@ -33,6 +35,7 @@ public class PassTask {
 		this.hashAlgorithm = hashAlgorithm;
 		this.endingPrefix = endingPrefix;
 		this.startingPrefix = startingPrefix;
+		this.id =ID;
 		
 		initiateAvailableCharacters(lowercase, uppercase, numbers, specialChars, specialCharsUsed);
 		
@@ -53,6 +56,10 @@ public class PassTask {
 			
 		}
 		
+	}
+	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed, String hashAlgorithm, String startingPrefix, String endingPrefix){
+		
+		this(length, lowercase, uppercase, numbers, specialChars, specialCharsUsed, hashAlgorithm, startingPrefix, endingPrefix, Control.getControl().getNextId());
 	}
 	
 	public PassTask(int length, boolean lowercase, boolean uppercase, boolean numbers, boolean specialChars, char[] specialCharsUsed, String hashAlgorithm){
@@ -140,6 +147,12 @@ public class PassTask {
 	}
 	public String getStartingPrefix(){
 		return startingPrefix;
+	}
+	public int getId(){
+		return this.id;
+	}
+	public void setDone(boolean b){
+		this.done = b;
 	}
 	
 	public PassTaskThread nextThread(){

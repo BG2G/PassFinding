@@ -10,6 +10,8 @@ public class TaskMessage {
 	private final static int SHA1 = 2;
 	private final static int ADDTASK = 5;
 	private final static int RESULT  = 9;
+	private static final byte NOT_FOUND = 0;
+	private static final byte RESULT_FOUND = 1;
 
 	public static void translate(byte[] message, Machine machine, int length) {
 		
@@ -23,15 +25,19 @@ public class TaskMessage {
 			String algo = null;
 			String startingPrefix ="";
 			String endingPrefix = "";
+			int id;
 			
-			if(message[1] == MD5){
+			id = message[1]*256 + message[2];
+			
+			
+			if(message[3] == MD5){
 				algo = new String ("MD5");
-			}else if (message[0] == SHA1){
+			}else if (message[3] == SHA1){
 				algo = new String("SHA1");
 			}
-			n = message[2];
+			n = message[4];
 			
-			int temp = message[3];
+			int temp = message[5];
 			if(temp%2 == 1){
 				lowercase = true;
 			}
@@ -48,46 +54,65 @@ public class TaskMessage {
 				specialChars = true;
 			}
 			
-			prefixLength = message[4];
+			prefixLength = message[6];
 			for(int i = 0; i< prefixLength; i++){
-				startingPrefix = startingPrefix + (char) message[i+5];
-				endingPrefix = endingPrefix + (char) message[i+prefixLength+5];
+				startingPrefix = startingPrefix + (char) message[i+7];
+				endingPrefix = endingPrefix + (char) message[i+prefixLength+7];
 			}
 			
 			PassTask newTask;
 			
 			if(specialChars){
-				char[] specialCharsUsed = new char[length - 5 - 2*prefixLength];
+				char[] specialCharsUsed = new char[length - 7 - 2*prefixLength];
 				for (int i = 0; i< specialCharsUsed.length; i++){
-					specialCharsUsed[i] = (char) message[i + 5 + 2*prefixLength];
+					specialCharsUsed[i] = (char) message[i + 7 + 2*prefixLength];
 				}
 				
-				newTask = new PassTask(n, lowercase, uppercase, numbers, specialChars, specialCharsUsed, algo, startingPrefix, endingPrefix);
+				newTask = new PassTask(n, lowercase, uppercase, numbers, specialChars, specialCharsUsed, algo, startingPrefix, endingPrefix, id);
 			}else{
-				newTask = new PassTask(n, lowercase, uppercase, numbers, specialChars, null, algo, startingPrefix, endingPrefix);
+				newTask = new PassTask(n, lowercase, uppercase, numbers, specialChars, null, algo, startingPrefix, endingPrefix,id);
 			}
 			
 			Control.getControl().addTask(newTask);
 		}
 		if(message[0] == RESULT){
-			//TO DO
+			int id;
+			id = message[1]*256 + message[2];
+			if(message[3] == NOT_FOUND){
+				Control.getControl().findTaskbyId(id).setDone(true);
+				//TO DO : update GUI
+			}else if(message[3] == RESULT_FOUND){
+				String result ="";
+				for(int i = 4; i<length;i++){
+					result = result+ (char) message[i];
+				}
+				//TO DO : update GUI
+				
+			}
 		}
 	}
 	
 	public static void sendNewTask(PassTask task, Machine machine) throws IOException{
-		int n = 5+2*task.getPrefixSize();
+		int n = 10+2*task.getPrefixSize();
 		if(task.getSpecialChars()!=  null){
 			n = n + task.getSpecialChars().length;
 		}
 		byte[] message = new byte[n];
 		
-		message[0] = ADDTASK;
+		message[0] = TASK;
+		message[1] = (byte) (n/256);
+		message[2] = (byte) (n%256);
+		
+		message[3] = ADDTASK;
+		int id = task.getId();
+		message[4] = (byte) (id/256);
+		message[5] = (byte) (id%256);
 		if(task.getAlgorithm() == "MD5"){
-			message[1] = MD5;
+			message[6] = MD5;
 		}else if(task.getAlgorithm() == "SHA1"){
-			message[1] = SHA1;
+			message[6] = SHA1;
 		}
-		message[2] = (byte) task.getPassLength();
+		message[7] = (byte) task.getPassLength();
 		int temp = 0;
 		if(task.usingLowercase()){
 			temp = temp +1;
@@ -101,18 +126,18 @@ public class TaskMessage {
 		if(task.usingSpecialChars()){
 			temp = temp +8;
 		}
-		message[3] = (byte) temp;
-		message[4] = (byte) task.getPrefixSize();
+		message[8] = (byte) temp;
+		message[9] = (byte) task.getPrefixSize();
 		char[] startingPrefixArray = task.getStartingPrefix().toCharArray();
 		char[] endingPrefixArray = task.getEndingPrefix().toCharArray();
 		
 		for(int i = 0; i< task.getPrefixSize(); i++){
-			message[5+i]= (byte) startingPrefixArray[i];
-			message[5+i+task.getPrefixSize()] = (byte) endingPrefixArray[i];
+			message[10+i]= (byte) startingPrefixArray[i];
+			message[10+i+task.getPrefixSize()] = (byte) endingPrefixArray[i];
 		}
 	
 		for(int i = 0; i<task.getSpecialChars().length;i++){
-			message[5+2*task.getPrefixSize()+i] = (byte) task.getSpecialChars()[i];  
+			message[10+2*task.getPrefixSize()+i] = (byte) task.getSpecialChars()[i];  
 		}
 		
 		if(!machine.isEnabled()){

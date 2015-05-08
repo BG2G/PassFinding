@@ -1,6 +1,9 @@
 package mainPackage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import communication.core.Machine;
 
 
 public class Control {
@@ -8,6 +11,12 @@ public class Control {
 	private static Control instance = null;
 	private PassHashData data;
 	private List<PassTask> tasks = new ArrayList<PassTask>();
+	private List<PassTask> localTasks = new ArrayList<PassTask>();
+	private int taskID = 0;
+	private boolean searchOngoing = false;
+	private List<Machine> machines = new ArrayList<Machine>(); 
+	
+	
 	
 	private Control(){	
 	}
@@ -35,8 +44,43 @@ public class Control {
 	public  List<PassTask> getTasks(){
 		return tasks;
 	}
+	public PassTask getNextLocalTask(){
+		PassTask task = localTasks.get(0);
+		localTasks.remove(0);
+		return task;
+	}
+	public boolean nextLocalTaskExists(){
+		return !localTasks.isEmpty();
+	}
 	public PassHashData getHashData(){
 		return data;
 	}
+	public int getNextId(){
+		this.taskID++;
+		return this.taskID;
+	}
+	public boolean isSearchOngoing(){
+		return searchOngoing;
+	}
+	public void setSearchOngoing(boolean b){
+		searchOngoing = b;
+	}
+	public List<Machine> getMachines(){
+		return machines;
+	}
 	
+	public void addMachine(Machine machine){
+		machines.add(machine);
+	}
+	
+	public PassTask findTaskbyId(int id){
+		Iterator<PassTask> iterator =  tasks.iterator();
+		while(iterator.hasNext()){
+			PassTask task = iterator.next();
+			if(task.getId()==id){
+				return task;
+			}
+		}
+		return null;
+	}
 }
