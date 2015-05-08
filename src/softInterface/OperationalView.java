@@ -65,8 +65,8 @@ public class OperationalView extends Window implements ActionListener {
 		
 		
 		// Listener
-		nbTwo.getButt().setActionCommand("test");
-		nbTwo.getButt().addActionListener(this);
+		nbFour.getButt().setActionCommand("test");
+		nbFour.getButt().addActionListener(this);
 
 
 	}
@@ -125,8 +125,8 @@ public class OperationalView extends Window implements ActionListener {
 		
 		if (ev.getActionCommand().equals("test")){
 			System.out.println("test");
-			String[] elements = {"Password","Hash", "Time"};
-			nbTwo.addLine(elements);
+			String[] elements = {"Machine Name","I.P.", "Status", "Time"};
+			nbFour.addLine(elements);
 			revalidate();
 		}
 		

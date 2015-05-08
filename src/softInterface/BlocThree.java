@@ -112,5 +112,16 @@ public class BlocThree {
 	public void setPanel(Panel panel) {
 		this.panel = panel;
 	}
+	
+	public void addLineGT(String[] elements){
+		tabgt.addLine(elements);
+				
+	}
+	
+	public void addLineLT(String[] elements){
+		tablt.addLine(elements);
+				
+	}
+	
 
 }
