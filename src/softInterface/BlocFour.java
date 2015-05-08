@@ -6,32 +6,68 @@ import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class BlocFour {
-	
+
 	private JLabel tit3;
 	private Table tab;
 	private Panel panel;
-	private JButton butt;
-	
+	private JTextField enter1;
+	private JTextField enter2;
+	private JTextField enter3;
+	private JTextField enter4;
+
 	public BlocFour(){
-		
+
 		tit3 = new JLabel("Machines");
 		// Table
 		tab = new TableMachine(6,4);
+
 		
-		// Test button
-		butt = new JButton("test");
+		// Actions
+		//ADD
+		JLabel adt = new JLabel("Add :");
+		enter1 = new JTextField("Machine Name");
+
+		enter2 = new JTextField("Internet Protocol");
 		
+
+		enter3 = new JTextField("Password");
+
+		JButton add = new JButton("ADD");
+		add.setActionCommand("addmachine");
+		JComponent[] addele = {adt, enter1, enter2, enter3,add};
+		Panel addPanel = new Panel(addele);
+		addPanel.setLayout(new BoxLayout(addPanel,BoxLayout.Y_AXIS));
+		//DELETE
+		JLabel det = new JLabel("Delete :");
+		enter4 = new JTextField("Machine Name");
+		enter4.setMaximumSize(enter4.getPreferredSize());
+		JButton del = new JButton("DELETE");
+		del.setActionCommand("deltask");
+		JComponent[] delele = {det,enter4,del};
+		Panel delPanel = new Panel(delele);
+		delPanel.setLayout(new BoxLayout(delPanel,BoxLayout.Y_AXIS));
+		
+		addPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		delPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		
+		JComponent[] actele = {addPanel,delPanel};
+		Panel actionPanel = new Panel(actele);
+		actionPanel.setLayout(new BoxLayout(actionPanel,BoxLayout.X_AXIS));
+
 		// Panel
-		Component[] ele4 = {tit3,tab.getScroll(),butt};
+		JComponent[] ele4 = {tit3,tab.getScroll(),actionPanel};
 		panel = new Panel(ele4);
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 	}
 
 	public JLabel getTit3() {
@@ -58,20 +94,14 @@ public class BlocFour {
 		this.panel = panel;
 	}
 
-	public JButton getButt() {
-		return butt;
-	}
 
-	public void setButt(JButton butt) {
-		this.butt = butt;
-	}
-	
+
 	public void addLine(String[] elements){
 		tab.addLine(elements);
-				
+
 	}
-	
-	
-	
+
+
+
 
 }

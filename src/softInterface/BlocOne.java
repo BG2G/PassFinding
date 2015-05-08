@@ -2,8 +2,10 @@ package softInterface;
 
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 public class BlocOne {
@@ -21,7 +23,7 @@ public class BlocOne {
 		text3 = new JLabel("Password : "+pw);
 		
 		// Panel
-		Component ele1[] = new Component[3];
+		JComponent ele1[] = new JComponent[3];
 		ele1[0] = text1;
 		ele1[1] = text2;
 		ele1[2] = text3;

@@ -1,12 +1,19 @@
 package softInterface;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 
 public class BlocThree {
@@ -19,6 +26,13 @@ public class BlocThree {
 	private Panel ltt;
 	private Panel gtt;
 	private Panel panel;
+	private JTextField enter1;
+	private JTextField enter2;
+	private JTextField enter3;
+	private JTextField enter4;
+	private JTextField enter5;
+	private JCheckBox check1;
+	private JCheckBox check2;
 
 	public BlocThree(String tag){
 		// Local Tasks Panel
@@ -27,7 +41,7 @@ public class BlocThree {
 		// Table
 		tablt = new TableLT(3,3);
 		// Panel
-		Component[] cplt = {tit1,tablt.getScroll()};
+		JComponent[] cplt = {tit1,tablt.getScroll()};
 		ltt = new Panel(cplt);
 		ltt.setLayout(new BoxLayout(ltt,BoxLayout.Y_AXIS));
 		
@@ -36,22 +50,56 @@ public class BlocThree {
 		tit2 = new JLabel("Global Task");
 		// Table
 		tabgt = new TableGT(3,3);
+		// Actions 
+		//ADD
+		JLabel adt = new JLabel("Add :");
+		enter1 = new JTextField("Task #");
+		check1 = new JCheckBox("Numbers");
+		enter2 = new JTextField("Numbers");
+		check2 = new JCheckBox("Special Characters");
+		enter3 = new JTextField("Special Characters");
+		enter4 = new JTextField("Length");
+		JButton add = new JButton("ADD");
+		add.setActionCommand("addtask");
+		JComponent[] addele = {adt, enter1, check1, enter2, check2, enter3,enter4,add};
+		Panel addPanel = new Panel(addele);
+		addPanel.setLayout(new BoxLayout(addPanel,BoxLayout.Y_AXIS));
+		//DELETE
+		JLabel det = new JLabel("Delete :");
+		enter5 = new JTextField("Task #");
+		enter5.setMaximumSize(enter5.getPreferredSize());
+		JButton del = new JButton("DELETE");
+		del.setActionCommand("deltask");
+		JComponent[] delele = {det,enter5,del};
+		Panel delPanel = new Panel(delele);
+		delPanel.setLayout(new BoxLayout(delPanel,BoxLayout.Y_AXIS));
+		
+		addPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		delPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		
+		JComponent[] actele = {addPanel,delPanel};
+		Panel actionPanel = new Panel(actele);
+		actionPanel.setLayout(new BoxLayout(actionPanel,BoxLayout.X_AXIS));
+		
+				
+		
+		
 		// Panel
-		Component[] cpgt = {tit2,tabgt.getScroll()};
+		JComponent[] cpgt = {tit2,tabgt.getScroll(),actionPanel};
 		gtt = new Panel(cpgt);
 		gtt.setLayout(new BoxLayout(gtt,BoxLayout.Y_AXIS));
 		
 		
 		// Panel
 		if(tag.equals("MASTER")){
-			Component[] ele3 = {ltt,gtt};
+			JComponent[] ele3 = {ltt,gtt};
 			panel = new Panel(ele3);
 		}
 		else if (tag.equals("SLAVE")){
-			Component[] ele3 = {ltt};
+			JComponent[] ele3 = {ltt};
 			panel = new Panel(ele3);
 		}
-		panel.setLayout(new FlowLayout());
+		panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		

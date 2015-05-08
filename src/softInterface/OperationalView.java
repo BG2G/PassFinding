@@ -64,9 +64,7 @@ public class OperationalView extends Window implements ActionListener {
 		pack();
 		
 		
-		// Listener
-		nbFour.getButt().setActionCommand("test");
-		nbFour.getButt().addActionListener(this);
+
 
 
 	}

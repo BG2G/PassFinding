@@ -34,11 +34,13 @@ public class Table {
 		}
 		scroll = new JScrollPane(tab);
 		tab.setFillsViewportHeight(true);
-		int hLi = 16;
+		int hLi = 18;
 		int width = (int) tab.getPreferredSize().getWidth()+1;
-		int height = nbLiVi*hLi;
+		int height = nbLiVi*hLi+hLi;
 		Dimension dim = new Dimension(width,height);
 		tab.setPreferredScrollableViewportSize(dim);
+		tab.setPreferredSize(dim);
+		scroll.setPreferredSize(dim);
 
 	}
 

@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 
@@ -38,7 +39,7 @@ public class BlocTwo {
 		
 				
 		// Panel
-		Component ele2[] = new Component[4];
+		JComponent ele2[] = new JComponent[4];
 		ele2[2] = box;
 		ele2[0] = text4;
 		ele2[1] = text5;

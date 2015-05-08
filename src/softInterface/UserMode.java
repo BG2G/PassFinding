@@ -16,6 +16,7 @@ import java.net.UnknownHostException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 public class UserMode extends Window implements ActionListener {
@@ -52,11 +53,11 @@ public class UserMode extends Window implements ActionListener {
 		SLAVE.setActionCommand("plop");
 		SLAVE.addActionListener(this);
 	
-		Component[] cp1 = {MASTER,SLAVE};
+		JComponent[] cp1 = {MASTER,SLAVE};
 		Panel pan2 = new Panel(cp1);
 		pan2.setLayout(new FlowLayout());
 		
-		Component[] cp2 = {tit,cho,pan2};
+		JComponent[] cp2 = {tit,cho,pan2};
 		Panel princ = new Panel(cp2);
 		princ.setLayout(new BoxLayout(princ, BoxLayout.Y_AXIS));
 		
