@@ -65,18 +65,22 @@ public class Machine {
 	}
 	
 	public void receiveMessage() throws IOException{
+		// TO DO  : Decryption
 		int type = is.read();
 		int length = is.read()*256 +is.read();
-		byte[] message = new byte[length];
+		byte[] message = new byte[length-2];
 		int n = is.read(message);
 		
 		switch(type){
 		case StatusMessage.STATUS:
-			StatusMessage.translate(message, this);
+			StatusMessage.translate(message, this,n);
+			break;
 		case DataMessage.DATA:
-			DataMessage.translate(message, this);			
+			DataMessage.translate(message, this,n);
+			break;
 		case TaskMessage.TASK:
-			TaskMessage.translate(message, this);
+			TaskMessage.translate(message, this,n);
+			break;
 		}
 		
 	}

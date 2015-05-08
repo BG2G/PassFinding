@@ -1,3 +1,4 @@
+package mainPackage;
 
 public  class Auxiliary {
 
@@ -80,5 +81,11 @@ public  class Auxiliary {
 			System.out.print(a[i]);
 		}
 		System.out.println();
+	}
+	
+	public static void transferBytes(byte[] from, byte[] to, int fromStart,int toStart, int n){
+		for(int i = 0; i<n; i++){
+			to[i+toStart] = from[fromStart + i];
+		}
 	}
 }

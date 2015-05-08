@@ -1,3 +1,4 @@
+package mainPackage;
 import java.util.Arrays;
 
 
@@ -11,8 +12,9 @@ public class PassTask {
 	private boolean useUpperCase;
 	private boolean useNumbers;
 	private boolean useSpecialCharacters;
-	private char[] specialCharsUsed;
+	private char[] specialCharsUsed= null;
 	private String prefix = "";
+	private String startingPrefix = "";
 	private String endingPrefix ="";
 	private char[] availableChars;
 	private String hashAlgorithm = "MD5";
@@ -30,6 +32,7 @@ public class PassTask {
 		this.specialCharsUsed = specialCharsUsed;
 		this.hashAlgorithm = hashAlgorithm;
 		this.endingPrefix = endingPrefix;
+		this.startingPrefix = startingPrefix;
 		
 		initiateAvailableCharacters(lowercase, uppercase, numbers, specialChars, specialCharsUsed);
 		
@@ -119,6 +122,25 @@ public class PassTask {
 		return this.availableChars;
 	}
 
+	public int getPassLength(){
+		return passLength;
+	}
+	
+	public boolean usingLowercase(){
+		return useLowerCase;
+	}
+	public boolean usingUppercase(){
+		return useUpperCase;
+	}
+	public boolean usingNumbers(){
+		return useNumbers;
+	}
+	public boolean usingSpecialChars(){
+		return useSpecialCharacters;
+	}
+	public String getStartingPrefix(){
+		return startingPrefix;
+	}
 	
 	public PassTaskThread nextThread(){
 		
@@ -171,6 +193,20 @@ public class PassTask {
 		}
 	}
 	
+	public int getPrefixSize(){
+		return endingPrefix.length();
+	}
+	
+	public String getEndingPrefix(){
+		return endingPrefix;
+	}
+	
+	public char[] getSpecialChars(){
+		return specialCharsUsed;
+	}
+	public String getAlgorithm(){
+		return hashAlgorithm;
+	}
 	private void nextFirstPartPrefix(char[] current, int n, char[] options){
 		for(int i = n-1; i>=0; i--){
 			if(current[i] != options[options.length -1]){

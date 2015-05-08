@@ -1,3 +1,4 @@
+package mainPackage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,6 +51,9 @@ public class PassHashData {
 	
 	public void setHashAlgorithm (String algo){
 		this.hashAlgorithm = algo;
+	}
+	public String getAlgorithm(){
+		return this.hashAlgorithm;
 	}
 	
 	public void removeElement(byte[] element){
