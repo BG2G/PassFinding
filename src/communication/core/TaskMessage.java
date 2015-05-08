@@ -10,8 +10,9 @@ public class TaskMessage {
 	private final static int SHA1 = 2;
 	private final static int ADDTASK = 5;
 	private final static int RESULT  = 9;
-	private static final byte NOT_FOUND = 0;
-	private static final byte RESULT_FOUND = 1;
+	private final static int TASK_STARTED = 10;
+	private static final byte NOT_FOUND = 7;
+	private static final byte RESULT_FOUND = 8;
 
 	public static void translate(byte[] message, Machine machine, int length) {
 		
@@ -74,12 +75,13 @@ public class TaskMessage {
 			}
 			
 			Control.getControl().addTask(newTask);
-		}
-		if(message[0] == RESULT){
+		}else if(message[0] == RESULT){
 			int id;
 			id = message[1]*256 + message[2];
 			if(message[3] == NOT_FOUND){
-				Control.getControl().findTaskbyId(id).setDone(true);
+				PassTask task =Control.getControl().findTaskbyId(id);
+				task.setDone(true);
+				task.setStatus(PassTask.COMPLETED);
 				//TO DO : update GUI
 			}else if(message[3] == RESULT_FOUND){
 				String result ="";
@@ -89,6 +91,10 @@ public class TaskMessage {
 				//TO DO : update GUI
 				
 			}
+		}else if(message[0] == TASK_STARTED){
+			int id = message[1]*256 +message[2];
+			Control ctrl = Control.getControl();
+			ctrl.findTaskbyId(id).setStatus(PassTask.STARTED);
 		}
 	}
 	
@@ -144,5 +150,47 @@ public class TaskMessage {
 			machine.connect();
 		}
 		machine.send(message);
+	}
+	
+	public void sendResult(boolean found, String result, PassTask task, Machine master) throws IOException{
+		int n = 7;
+		if(found){
+			n = n + result.length();
+		}
+		byte[] message = new byte[n];
+		message[0] = TASK;
+		message[1] = 0;
+		message[2] =(byte) n;
+		message[3] = RESULT;
+		message[4] = (byte) (task.getId()/256);
+		message[5] = (byte) (task.getId()%256);
+		if(found){
+			message[6] = RESULT_FOUND;
+			for(int i =7; i<7+result.length(); i++){
+				message[i] = (byte) result.charAt(i);
+			}
+		}else{
+			message[6] = NOT_FOUND;
+		}
+		if(!master.isEnabled()){
+			master.connect();
+		}
+		master.send(message);
+		
+	}
+	
+	public void sendTaskStarted(PassTask task, Machine master) throws IOException{
+		byte[] message =  new byte[6];
+		message[0] = TASK;
+		message[1] = 0;
+		message[2] = 6;
+		message[3] = TASK_STARTED;
+		message[4] = (byte) (task.getId()/256);
+		message[5] = (byte) (task.getId()%256);
+		
+		if(!master.isEnabled()){
+			master.connect();
+		}
+		master.send(message);
 	}
 }

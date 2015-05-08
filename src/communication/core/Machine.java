@@ -17,6 +17,7 @@ public class Machine {
 	private long key;
 	private OutputStream os;
 	private InputStream is;
+	private int onGoingTasks = 0;
 	
 	
 	public Machine(InetAddress IP, long communicationKey){
@@ -83,6 +84,16 @@ public class Machine {
 			break;
 		}
 		
+	}
+	
+	public void incrementOngoingTasks(){
+		onGoingTasks++;
+	}
+	public void decrementOngoingTasks(){
+		onGoingTasks--;
+	}
+	public int getOngoingTasks(){
+		return onGoingTasks;
 	}
 	
 	

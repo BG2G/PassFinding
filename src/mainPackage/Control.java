@@ -10,11 +10,11 @@ public class Control {
 
 	private static Control instance = null;
 	private PassHashData data;
-	private List<PassTask> tasks = new ArrayList<PassTask>();
-	private List<PassTask> localTasks = new ArrayList<PassTask>();
-	private int taskID = 0;
+	private volatile List<PassTask> tasks = new ArrayList<PassTask>();
+	private volatile List<PassTask> localTasks = new ArrayList<PassTask>();
+	private volatile int taskID = 0;
 	private boolean searchOngoing = false;
-	private List<Machine> machines = new ArrayList<Machine>(); 
+	private volatile List<Machine> machines = new ArrayList<Machine>(); 
 	
 	
 	

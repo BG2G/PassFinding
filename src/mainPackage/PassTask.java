@@ -6,9 +6,13 @@ public class PassTask {
 	
 	private final int MAX_PASS_LENGTH_BY_THREAD_UNICASE = 5;
 	private final int MAX_PASS_LENGTH_BY_THREAD_MULTICASE = 4;
+	public final static String STARTED = "Ongoing";
+	public final static String PLANNED = "Scheduled";
+	public final static String COMPLETED = "Completed";
+	public final static String WAITING = "Waiting";
 	
 	private int id;
-	
+	private String status = WAITING;
 	private int passLength;
 	private boolean useLowerCase;
 	private boolean useUpperCase;
@@ -219,6 +223,13 @@ public class PassTask {
 	}
 	public String getAlgorithm(){
 		return hashAlgorithm;
+	}
+	public String getStatus(){
+		return status;
+	}
+	
+	public void setStatus(String newStatus){
+		status = newStatus;
 	}
 	private void nextFirstPartPrefix(char[] current, int n, char[] options){
 		for(int i = n-1; i>=0; i--){

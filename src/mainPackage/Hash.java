@@ -1,7 +1,4 @@
 package mainPackage;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import org.apache.commons.codec.digest.DigestUtils;
 
 
