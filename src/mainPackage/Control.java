@@ -19,6 +19,7 @@ public class Control {
 	private Machine master = null;
 	private volatile List<Result> results = new ArrayList<Result>();
 	private volatile List<PassTaskThread> threads = new ArrayList<PassTaskThread>();
+	private volatile List<PassTask> unscheduledTasks = new ArrayList<PassTask>();
 	
 	
 	
@@ -65,6 +66,12 @@ public class Control {
 	public boolean nextLocalTaskExists(){
 		return !localTasks.isEmpty();
 	}
+	public int countLocalTasks(){
+		return localTasks.size();
+	}
+	public void addLocalTasks(PassTask task){
+		localTasks.add(task);
+	}
 	public PassHashData getHashData(){
 		return data;
 	}
@@ -107,6 +114,14 @@ public class Control {
 	public List<Result> getResult(){
 		return results;
 	}
+	
+	public void addUnscheduledTask(PassTask task){
+		unscheduledTasks.add(task);
+	}
+	public List<PassTask> getUnscheduledTasks(){
+		return unscheduledTasks;
+	}
+	
 	public PassTask findTaskbyId(int id){
 		Iterator<PassTask> iterator =  tasks.iterator();
 		while(iterator.hasNext()){
@@ -117,4 +132,5 @@ public class Control {
 		}
 		return null;
 	}
+	
 }
