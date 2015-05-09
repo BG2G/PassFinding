@@ -18,7 +18,13 @@ public class Machine {
 	private OutputStream os;
 	private InputStream is;
 	private int onGoingTasks = 0;
+	private String name="";
 	
+	public Machine(InetAddress IP, long communicationKey, String name){
+		this.ip = IP;
+		this.key = communicationKey;
+		this.name = name;
+	}
 	
 	public Machine(InetAddress IP, long communicationKey){
 		this.ip = IP;
@@ -28,6 +34,11 @@ public class Machine {
 	public Machine(byte[]  addr, long communicationKey) throws UnknownHostException{
 		this.ip = InetAddress.getByAddress(addr);
 		this.key = communicationKey;
+	}
+	
+	public Machine(Socket socket, long communicationKey){
+		key = communicationKey;
+		this.socket = socket;
 	}
 	
 	public void connect() throws IOException{
@@ -47,7 +58,12 @@ public class Machine {
 	public long getKey(){
 		return key;
 	}
-	
+	public void setName(String name) {
+		this.name =name;	
+	}
+	public String getName(){
+		return name;
+	}
 	public boolean isEnabled(){
 		return !(socket==null);
 	}

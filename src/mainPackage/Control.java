@@ -9,12 +9,16 @@ import communication.core.Machine;
 public class Control {
 
 	private static Control instance = null;
+	private long initialTimer;
 	private PassHashData data;
 	private volatile List<PassTask> tasks = new ArrayList<PassTask>();
 	private volatile List<PassTask> localTasks = new ArrayList<PassTask>();
 	private volatile int taskID = 0;
 	private boolean searchOngoing = false;
 	private volatile List<Machine> machines = new ArrayList<Machine>(); 
+	private Machine master = null;
+	private volatile List<Result> results = new ArrayList<Result>();
+	private volatile List<PassTaskThread> threads = new ArrayList<PassTaskThread>();
 	
 	
 	
@@ -27,10 +31,19 @@ public class Control {
 		}else {
 			Control control = new Control();
 			control.setInstance(control);
+			control.setInitialTimer(System.currentTimeMillis());
 			return control;
 		}
 	}
 	
+	private void setInitialTimer(long currentTimeMillis) {
+		initialTimer = currentTimeMillis;
+		
+	}
+	public long getInitialTimer(){
+		return initialTimer;
+	}
+
 	private void setInstance(Control control){
 		Control.instance = control;
 	}
@@ -68,11 +81,32 @@ public class Control {
 	public List<Machine> getMachines(){
 		return machines;
 	}
+	public Machine getMaster(){
+		return master;
+	}
+	public void setMachine(Machine master){
+		this.master = master;
+	}
 	
 	public void addMachine(Machine machine){
 		machines.add(machine);
 	}
 	
+	public void addThread(PassTaskThread thread){
+		threads.add(thread);
+	}
+	public void removeThread(PassTaskThread thread){
+		threads.remove(thread);
+	}
+	public List<PassTaskThread> getThreads(){
+		return threads;
+	}
+	public void addResult(Result r){
+		results.add(r);
+	}
+	public List<Result> getResult(){
+		return results;
+	}
 	public PassTask findTaskbyId(int id){
 		Iterator<PassTask> iterator =  tasks.iterator();
 		while(iterator.hasNext()){
