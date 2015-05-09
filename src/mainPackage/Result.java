@@ -9,7 +9,7 @@ public class Result {
 	public Result(String password, String algo){
 		this.password = password;
 		hash = stringHash(password,algo);
-		seconds= (System.currentTimeMillis()-Control.getControl().getInitialTimer())/1000;
+		seconds= (int) ((System.currentTimeMillis()-Control.getControl().getInitialTimer())/1000);
 	}
 
 	private String stringHash(String password, String algo){

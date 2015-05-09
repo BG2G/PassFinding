@@ -278,5 +278,38 @@ public class PassTask {
 		name = name + passLength;
 		return name;
 	}
+	
+	public PassTask[] fragmentTask(){
+		int n = this.getPassLength() -  MAX_PASS_LENGTH_BY_THREAD_MULTICASE -3;
+		if(n>0){
+			char[] availableChars = this.getAvailableCharacters();
+			char[] startingPrefixArray = new char[n];
+			//char[] endingPrefixArray = new char[n];
+			//char[] temp;
+			for(int i =0; i<n; i++){
+				startingPrefixArray[i] = availableChars[0];
+				//endingPrefixArray[i] = availableChars[0];
+			}
+			//next(endingPrefixArray, availableChars);
+						
+			int m = availableChars.length^n;
+			PassTask[] tasks = new PassTask[m];
+			
+			for(int i =0; i<m; i++){
+				tasks[i] = new PassTask(this.getPassLength(), this.useLowerCase, this.useUpperCase, this.useNumbers, this.useSpecialCharacters, this.getSpecialChars(),
+										this.getAlgorithm(), new String(startingPrefixArray), new String(startingPrefixArray));
+				
+				nextFirstPartPrefix(startingPrefixArray,n, availableChars);
+				//next(endingPrefixArray, availableChars);
+			}
+			
+			
+			return tasks;
+		}else{
+			return new PassTask[]{this};
+		}
+	}
+	
+
 
 }
