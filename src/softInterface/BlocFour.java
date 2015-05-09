@@ -48,7 +48,7 @@ public class BlocFour {
 		enter4 = new JTextField("Machine Name");
 		enter4.setMaximumSize(enter4.getPreferredSize());
 		JButton del = new JButton("DELETE");
-		del.setActionCommand("deltask");
+		del.setActionCommand("delmachine");
 		JComponent[] delele = {det,enter4,del};
 		Panel delPanel = new Panel(delele);
 		delPanel.setLayout(new BoxLayout(delPanel,BoxLayout.Y_AXIS));

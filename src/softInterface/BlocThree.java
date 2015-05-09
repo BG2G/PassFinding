@@ -26,8 +26,8 @@ public class BlocThree {
 	private Panel ltt;
 	private Panel gtt;
 	private Panel panel;
-	private JTextField enter1;
-	private JTextField enter2;
+	private JCheckBox check3;
+	private JCheckBox check4;
 	private JTextField enter3;
 	private JTextField enter4;
 	private JTextField enter5;
@@ -53,15 +53,15 @@ public class BlocThree {
 		// Actions 
 		//ADD
 		JLabel adt = new JLabel("Add :");
-		enter1 = new JTextField("Task #");
+		check3 = new JCheckBox("Upper Case");
+		check4 = new JCheckBox("Lower Case");
 		check1 = new JCheckBox("Numbers");
-		enter2 = new JTextField("Numbers");
 		check2 = new JCheckBox("Special Characters");
 		enter3 = new JTextField("Special Characters");
 		enter4 = new JTextField("Length");
 		JButton add = new JButton("ADD");
 		add.setActionCommand("addtask");
-		JComponent[] addele = {adt, enter1, check1, enter2, check2, enter3,enter4,add};
+		JComponent[] addele = {adt, check3, check4, check1, check2, enter3,enter4,add};
 		Panel addPanel = new Panel(addele);
 		addPanel.setLayout(new BoxLayout(addPanel,BoxLayout.Y_AXIS));
 		//DELETE
