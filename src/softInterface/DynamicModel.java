@@ -8,7 +8,7 @@ public class DynamicModel extends AbstractTableModel {
 
 	private static final String[] nameCode = {"Password","Hash", "Time"};
 	private static final String[] nameGT = {"Task #", "Starting Prefixe", "Ending Prefixe", "Lower Case", "Upper Case", "Numbers", "Special Characters", "Length", "Status", "Time"};
-	private static final String[] nameLT = {"Thread #", "Type", "Length", "Prefixe", "Status", "Time"};
+	private static final String[] nameLT = {"Lower Case", "Upper Case", "Numbers", "Special Characters", "Length", "Prefixe"};
 	private static final String[] nameMachine = {"Machine Name","I.P.", "Status", "Time"};
 
 	private boolean editable;
