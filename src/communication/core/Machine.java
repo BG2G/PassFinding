@@ -11,7 +11,7 @@ public class Machine {
 
 
 	private InetAddress ip;
-	private int port = 30318;
+	public static int port = 30318;
 	private int activeStrength =1;
 	private Socket socket = null;
 	private long key;
@@ -66,6 +66,9 @@ public class Machine {
 	}
 	public boolean isEnabled(){
 		return !(socket==null);
+	}
+	public boolean isDataAvailable() throws IOException{
+		return (is.available()>0);
 	}
 	
 	public void send(byte[] payload) throws IOException{

@@ -1,11 +1,13 @@
 package mainPackage;
 
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.Semaphore;
 
+import communication.core.Listening;
 import communication.core.Machine;
 import communication.core.TaskMessage;
 
@@ -46,6 +48,31 @@ public class Main {
 		
 		PassHashData data = new PassHashData("hashData.dat");
 		Control.getControl().setHashData(data);
+		
+		// Listen for incoming communication
+		Listening listener = new Listening();
+		listener.listen();
+			
+		
+	}
+	
+	public static void startSlave(){
+		try {
+			ServerSocket masterListener = new ServerSocket(Machine.port);
+			Socket socket = masterListener.accept();
+			
+			Control ctrl = Control.getControl();
+			Machine master = new Machine(socket,ctrl.getKey());
+			ctrl.setMaster(master);
+			
+			Listening listener = new Listening();
+			listener.listen();
+			
+			masterListener.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

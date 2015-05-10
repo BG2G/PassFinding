@@ -9,6 +9,7 @@ import communication.core.Machine;
 public class Control {
 
 	private static Control instance = null;
+	private long key = 0;
 	private long initialTimer;
 	private PassHashData data;
 	private volatile List<PassTask> tasks = new ArrayList<PassTask>();
@@ -91,7 +92,7 @@ public class Control {
 	public Machine getMaster(){
 		return master;
 	}
-	public void setMachine(Machine master){
+	public void setMaster(Machine master){
 		this.master = master;
 	}
 	
@@ -113,6 +114,9 @@ public class Control {
 	}
 	public List<Result> getResult(){
 		return results;
+	}
+	public long getKey(){
+		return key;
 	}
 	
 	public void addUnscheduledTask(PassTask task){
